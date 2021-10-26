@@ -21,5 +21,15 @@ listChecker [] _ = -1
 listChecker (x:xs) l2 = if smallestSharedNumber l2 x then x else listChecker xs l2
 
 --function take 2 tuples and generate the new one then make the new list tuple pair
-equationLooper:: (Integer, Integer)-> (Integer, Integer) -> (Integer, Integer)
-equationLooper (a1,n1) (a2,n2) =  (listChecker listOfFactor (a1, n1) listOfFactor (a2, n2)  , n1 * n2)
+equationGenerator:: (Integer, Integer)-> (Integer, Integer) -> (Integer, Integer)
+equationGenerator (a1,n1) (a2,n2) =  (listChecker (listOfFactor(a1, n1)) (listOfFactor(a2, n2))  , n1 * n2)
+--
+equationLooper :: [(Integer,Integer)] ->(Integer,Integer)-> (Integer,Integer)
+equationLooper [] (a,n) = (a,n) 
+equationLooper (x:xs) current = equationLooper xs (equationGenerator current (x))
+
+
+--starter function 
+ctr:: [(Integer,Integer)] -> (Integer,Integer)
+
+ctr (x:xs) = equationLooper xs x

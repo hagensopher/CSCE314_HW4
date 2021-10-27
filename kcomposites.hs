@@ -20,4 +20,19 @@ makeTwoComp myWord = if x then myWord else makeTwoComp (myWord ++ ['x'])
     where x = isTwoComp ( toInteger (length myWord)) (kcomposite 2)
 
 -- se we know the string is now two composite number , so we can use the two factors to make a string
---so we should make a 
+--so make a list that holds the large factor of the list lenght
+
+rowCreation :: [Char] -> Integer -> [Char]
+rowCreation myWord n = take (fromInteger n) myWord
+
+collumCreation :: [Char] -> [Integer] -> [[Char]]
+collumCreation [] _ = []
+collumCreation myWord n = [rowCreation (myWord) (sndFactor)] ++ collumCreation (drop (fromInteger sndFactor) myWord) n
+    where sndFactor = last n
+--use map
+
+combineHeads:: Char -> [Char]->[Char]
+combineHeads letter myWord = myWord ++ [letter] 
+
+combineString:: [[Char]] -> [Char]
+combineString listOfStrings = map combineHeads listOfStrings

@@ -31,5 +31,4 @@ equationLooper (x:xs) current = equationLooper xs (equationGenerator current (x)
 
 --starter function 
 ctr:: [(Integer,Integer)] -> (Integer,Integer)
-
 ctr (x:xs) = equationLooper xs x

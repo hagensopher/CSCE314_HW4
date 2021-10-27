@@ -13,3 +13,8 @@ isTwoComp listLength (x:xs)
     | listLength > x = isTwoComp listLength xs
     | listLength == x = True
     | listLength < x = False
+
+--this function will make the list two composite if it is not
+makeTwoComp :: [Char] -> [Char]
+makeTwoComp myWord = if x then myWord else makeTwoComp (myWord ++ ['x']) 
+    where x = isTwoComp ( toInteger (length myWord)) (kcomposite 2)

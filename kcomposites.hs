@@ -6,7 +6,7 @@ kcomposite n = [x | x <- [1..], numOfFactors x == n ]
 
 
 -- now we have this start of the hard part 
---take a string and check if it is two composite
+--take the length of a list and a list of k-composite (above) and check if it is two composite
 isTwoComp :: Integer -> [Integer]-> Bool
 isTwoComp _ [] = False
 isTwoComp listLength (x:xs)

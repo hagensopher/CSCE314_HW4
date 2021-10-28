@@ -39,6 +39,9 @@ combineHeads listOfStrings = if head listOfStrings == [] then [] else map head l
 anagramEncode :: [Char] -> [Char]
 anagramEncode myList = combineHeads (collumCreation (makeTwoComp myList) (numOfFactors  (toInteger (length (makeTwoComp myList)))))
 
+anagramDecode :: [Char] -> [Char]
+anagramDecode myList = combineHeads (collumCreation myList (reverse (numOfFactors  (toInteger (length (myList))))))
+
 --example of mapping with getting the first element of each collum in a 2D array
 col :: [[Int]] -> [Int]
 col n = map head n

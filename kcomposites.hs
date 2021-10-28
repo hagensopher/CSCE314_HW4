@@ -31,8 +31,15 @@ collumCreation myWord n = [rowCreation (myWord) (sndFactor)] ++ collumCreation (
     where sndFactor = last n
 --use map
 
-combineHeads:: Char -> [Char]->[Char]
-combineHeads letter myWord = myWord ++ [letter] 
 
-combineString:: [[Char]] -> [Char]
-combineString listOfStrings = map combineHeads listOfStrings
+--it was this simple OMG well this grabs each element in a collum
+combineHeads:: [[Char]] -> [Char]
+combineHeads [] = []
+combineHeads listOfStrings = if head listOfStrings == [] then [] else map head listOfStrings ++ combineHeads (map tail listOfStrings)
+--makes the right message but gives a expetion that the tail is null
+
+
+--example of mapping with getting the first element of each collum in a 2D array
+col :: [[Int]] -> [Int]
+col n = map head n
+

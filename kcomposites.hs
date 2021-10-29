@@ -15,7 +15,7 @@ isTwoComp listLength (x:xs)
 
 --this function will make the list two composite if it is not
 makeTwoComp :: [Char] -> [Char]
-makeTwoComp myWord = if x then myWord else makeTwoComp (myWord ++ ['x']) 
+makeTwoComp myWord = if x then myWord else makeTwoComp (myWord ++ ['X']) 
     where x = isTwoComp ( toInteger (length myWord)) (kcomposite 2)
 
 -- se we know the string is now two composite number , so we can use the two factors to make a string
@@ -33,14 +33,21 @@ collumCreation myWord n = [rowCreation (myWord) (sndFactor)] ++ collumCreation (
 combineHeads:: [[Char]] -> [Char]
 combineHeads [] = []
 combineHeads listOfStrings = if head listOfStrings == [] then [] else map head listOfStrings ++ combineHeads (map tail listOfStrings)
---makes the right message but gives a expetion that the hged is null
+--makes the right message but gives a expetion that the haed is null
 
 --function that glues it all together
 anagramEncode :: [Char] -> [Char]
 anagramEncode myList = combineHeads (collumCreation (makeTwoComp myList) (numOfFactors  (toInteger (length (makeTwoComp myList)))))
 
+--trim of the x values from the string
+trimX:: [Char]->[Char]
+trimX myList = if last myList /= 'X' then myList else trimX (init myList)
+--this function decodes the message 
 anagramDecode :: [Char] -> [Char]
-anagramDecode myList = combineHeads (collumCreation myList (reverse (numOfFactors  (toInteger (length (myList))))))
+anagramDecode myList = trimX (combineHeads (collumCreation myList (reverse (numOfFactors  (toInteger (length (myList)))))))
+
+
+
 
 --example of mapping with getting the first element of each collum in a 2D array
 col :: [[Int]] -> [Int]

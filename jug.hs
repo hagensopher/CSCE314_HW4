@@ -20,7 +20,7 @@ move1to2 :: (Integer,Integer) ->(Integer,Integer)-> (Integer,Integer)
 move1to2 jugs jugSizes = if fst jugs == 0 || snd jugs == snd jugSizes then jugs else move1to2 (fst jugs - 1,snd jugs +1) jugSizes
 -- 4.
 move2to1 :: (Integer,Integer) ->(Integer,Integer)-> (Integer,Integer)
-move2to1 jugs jugSizes = if snd jugs == 0 || fst jugs == fst jugSizes then jugs else move1to2 (fst jugs + 1,snd jugs -1) jugSizes
+move2to1 jugs jugSizes = if snd jugs == 0 || fst jugs == fst jugSizes then jugs else move2to1 (fst jugs + 1,snd jugs -1) jugSizes
 -- 4.
 discardJug1 :: (Integer,Integer) -> (Integer,Integer)
 discardJug1 jugs = (0 ,snd jugs)
@@ -33,7 +33,20 @@ actionList jugs sizeOfJugs i --i is the action number we want to do
     | i == 1 = if fst jugs == fst sizeOfJugs then jugs else (fst sizeOfJugs, snd jugs)
     | i == 2 = if snd jugs == snd sizeOfJugs then jugs else (fst jugs ,snd sizeOfJugs)
     | i == 3 = if fst jugs == 0 || snd jugs == snd sizeOfJugs then jugs else move1to2 (fst jugs - 1,snd jugs +1) sizeOfJugs
-    | i == 4 = if snd jugs == 0 || fst jugs == fst sizeOfJugs then jugs else move1to2 (fst jugs + 1,snd jugs -1) sizeOfJugs
+    | i == 4 = if snd jugs == 0 || fst jugs == fst sizeOfJugs then jugs else move2to1 (fst jugs + 1,snd jugs -1) sizeOfJugs
     | i == 5 = (0 ,snd jugs)
     | i == 6 = (fst jugs ,0)
     | otherwise = (-100,-100) --catch all of bad
+
+
+stateChecker:: [(Integer,Integer)] -> (Integer,Integer) -> (Integer,Integer)->[Integer] -> Int-> Bool
+stateChecker stateList jugs _ [] _ = False
+stateChecker stateList jugs sizeOfJugs (x:xs) output  
+    |  (fst newState + snd newState) == toInteger output = True
+    |  newState `elem` stateList =  stateChecker stateList jugs sizeOfJugs xs output  
+    |  otherwise = stateChecker (stateList ++ [newState]) newState sizeOfJugs [1..6] output 
+    where newState = actionList jugs sizeOfJugs x
+
+measureWater:: Int -> Int -> Int -> Bool
+measureWater jug1 jug2 output = stateChecker [(0,0)] (0,0) (toInteger jug1, toInteger jug2) [1..6] output
+    -- [(0,0),(3,0),(0,3),(3,3),(1,5)]

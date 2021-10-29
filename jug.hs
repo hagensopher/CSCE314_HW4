@@ -1,3 +1,4 @@
+
 --a list of all actions we can do
 {--
 1. fil jug 1
@@ -26,3 +27,13 @@ discardJug1 jugs = (0 ,snd jugs)
 -- 5.
 discardJug2 :: (Integer,Integer) -> (Integer,Integer)
 discardJug2 jugs = (fst jugs ,0)
+
+actionList:: (Integer,Integer) ->(Integer,Integer)->Integer->(Integer,Integer)
+actionList jugs sizeOfJugs i --i is the action number we want to do
+    | i == 1 = if fst jugs == fst sizeOfJugs then jugs else (fst sizeOfJugs, snd jugs)
+    | i == 2 = if snd jugs == snd sizeOfJugs then jugs else (fst jugs ,snd sizeOfJugs)
+    | i == 3 = if fst jugs == 0 || snd jugs == snd sizeOfJugs then jugs else move1to2 (fst jugs - 1,snd jugs +1) sizeOfJugs
+    | i == 4 = if snd jugs == 0 || fst jugs == fst sizeOfJugs then jugs else move1to2 (fst jugs + 1,snd jugs -1) sizeOfJugs
+    | i == 5 = (0 ,snd jugs)
+    | i == 6 = (fst jugs ,0)
+    | otherwise = (-100,-100) --catch all of bad
